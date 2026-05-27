@@ -4,6 +4,8 @@ defmodule Josephus.Functional do
   Usage: Josephus.Functional.solve(n_soldiers, every_k)
   For instance:
   iex(1)> Josephus.Functional.solve(41, 3)
+
+  The survivor will be the first in the list
   """
   def solve(n, k) when k > 0 do
     do_permutation(Enum.to_list(1..n), k, [], 0)
