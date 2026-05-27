@@ -1,0 +1,7 @@
+{application,redbug_clone,
+             [{description,"Clone of redbug"},
+              {pkg_name,"redbug_clone"},
+              {vsn,"2.0.10"},
+              {applications,[kernel,stdlib,runtime_tools]},
+              {licenses,["MIT"]},
+              {links,[{"Github","https://github.com/bokner/redbug"}]}]}.
