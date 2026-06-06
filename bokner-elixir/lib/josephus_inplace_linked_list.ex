@@ -1,5 +1,5 @@
-defmodule Josephus.InPlace do
-    @moduledoc """
+defmodule Josephus.InPlace.LinkedList do
+  @moduledoc """
   Functional version.
   Usage: Josephus.InPlace.solve(n_soldiers, every_k)
   For instance:
