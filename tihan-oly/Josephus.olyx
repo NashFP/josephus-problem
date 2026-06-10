@@ -1,0 +1,18 @@
+#target "dotnet: net10.0"
+
+SolveAux(n: int32, k: int32, winner: int32, i: int32): int32 =
+    if (i > n)
+        winner + 1
+    else
+        let winner = (winner + k) % i
+        SolveAux(n, k, winner, i + 1)
+
+Solve(n: int32, k: int32): int32 =
+    if (k <= 0 || k > n)
+        -1
+    else
+        SolveAux(n, k, 0, 1)
+
+main(): () =
+    printLine(Solve(41, 3)) // 31
+    printLine(Solve(100000, 5)) // 40333
