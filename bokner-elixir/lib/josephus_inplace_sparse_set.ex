@@ -11,17 +11,18 @@ defmodule Josephus.InPlace.SparseSet do
 
   def solve(num_soldiers, every_k) do
     circle = SparseSet.new(num_soldiers)
-    solve_impl(circle, every_k, 0, [])
+    solve_impl(circle, every_k, 0)
   end
 
-  def solve_impl(circle, k, position, acc) do
+  def solve_impl(circle, k, position) do
     if SparseSet.empty?(circle) do
-      acc
+      to_solution(circle)
     else
       next_to_kill = next(circle, position, k)
       SparseSet.delete(circle, next_to_kill)
-      solve_impl(circle, k, next_to_kill, [next_to_kill | acc])
+      solve_impl(circle, k, next_to_kill)
     end
+
   end
 
   def next(_circle, pos, 0), do: pos
@@ -42,5 +43,10 @@ defmodule Josephus.InPlace.SparseSet do
       end
 
     next(circle, next_p, moves_left)
+  end
+
+  defp to_solution(circle) do
+    ## Get the final permutation
+    InPlace.Array.to_list(circle.dom)
   end
 end
