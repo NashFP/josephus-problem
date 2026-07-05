@@ -1,9 +1,12 @@
 defmodule Josephus.InPlace.SparseSet do
   @moduledoc """
-  Functional version.
-  Usage: Josephus.InPlace.solve(n_soldiers, every_k)
+  Use SparseSet to represent the circle.
+
+  Usage: Josephus.InPlace.SparseSet.solve(n_soldiers, every_k)
   For instance:
-  iex(1)> Josephus.InPlace.solve(41, 3)
+  iex(1)> Josephus.InPlace.SparseSet.solve(41, 3)
+  [31, 16, 35, 4, 22, 2, 25, 11, 38, 29, 17, 8, 40, 34, 26, 20, 13, 7, 41, 37, 32,
+  28, 23, 19, 14, 10, 5, 1, 39, 36, 33, 30, 27, 24, 21, 18, 15, 12, 9, 6, 3]
 
   The survivor will be the first in the list
   """
@@ -11,23 +14,23 @@ defmodule Josephus.InPlace.SparseSet do
 
   def solve(num_soldiers, every_k) do
     circle = SparseSet.new(num_soldiers)
-    solve_impl(circle, every_k, 0)
+    solve_impl(circle, num_soldiers, every_k)
   end
 
-  def solve_impl(circle, k, position) do
-    if SparseSet.empty?(circle) do
-      to_solution(circle)
-    else
-      next_to_kill = next(circle, position, k)
-      SparseSet.delete(circle, next_to_kill)
-      solve_impl(circle, k, next_to_kill)
-    end
+  def solve_impl(circle, n, k) do
+    Enum.reduce_while(1..n, 0, fn _, position ->
+        next_to_kill = next(circle, position, k)
+        SparseSet.delete(circle, next_to_kill)
+        {:cont, next_to_kill}
+    end)
 
+    to_solution(circle)
   end
 
   def next(_circle, pos, 0), do: pos
 
-  def next(circle, pos, moves_left) do
+  ## walk around (reduced) circle and count
+  def next(circle, pos, round_count) do
     next_p =
       if pos == circle.max_size do
         1
@@ -35,14 +38,14 @@ defmodule Josephus.InPlace.SparseSet do
         pos + 1
       end
 
-    moves_left =
+    round_count =
       if SparseSet.member?(circle, next_p) do
-        moves_left - 1
+        round_count - 1
       else
-        moves_left
+        round_count
       end
 
-    next(circle, next_p, moves_left)
+    next(circle, next_p, round_count)
   end
 
   defp to_solution(circle) do

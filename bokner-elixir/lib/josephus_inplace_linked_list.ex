@@ -1,9 +1,12 @@
 defmodule Josephus.InPlace.LinkedList do
   @moduledoc """
-  Functional version.
-  Usage: Josephus.InPlace.solve(n_soldiers, every_k)
+  Use LinkedList to represent the circle.
+
+  Usage: Josephus.InPlace.LinkedList.solve(n_soldiers, every_k)
   For instance:
-  iex(1)> Josephus.InPlace.solve(41, 3)
+  iex(1)> Josephus.InPlace.LinkedList.solve(41, 3)
+  [31, 16, 35, 4, 22, 2, 25, 11, 38, 29, 17, 8, 40, 34, 26, 20, 13, 7, 41, 37, 32,
+  28, 23, 19, 14, 10, 5, 1, 39, 36, 33, 30, 27, 24, 21, 18, 15, 12, 9, 6, 3]
 
   The survivor will be the first in the list
   """
